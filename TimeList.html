@@ -5,7 +5,7 @@
 	<link rel="scriptsheet" href="scripts.js">
 	<title>Time List</title>
 	<script>
-		function addTime() {
+	function addTime() {
 			// Get the current time without seconds
 			var currentTime = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
@@ -39,9 +39,17 @@
 				if (!inserted) {
 					timeList.appendChild(newTime);
 				}
+
+				// Save the times to Local Storage
+				localStorage.setItem("times", timeList.innerHTML);
 			}
 		}
-				
+
+		window.onload = function() {
+			// Load the times from Local Storage
+			var timeList = document.getElementById("timeList");
+			timeList.innerHTML = localStorage.getItem("times");
+		};		
 	</script>
 	
 </head>
