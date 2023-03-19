@@ -37,9 +37,3 @@ function addTime() {
         localStorage.setItem("times", timeList.innerHTML);
     }
 }
-
-window.onload = function() {
-    // Load the times from Local Storage
-    var timeList = document.getElementById("timeList");
-    timeList.innerHTML = localStorage.getItem("times");
-};
