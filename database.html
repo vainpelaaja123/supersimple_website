@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content=" width=device-width, initial-scale=1">
+<title> testing</title>
+
+
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+<!-- <script>src= "https://www.gstatic.com/firebasejs/9.18.0/firebase/database"</script> -->
+<script>src= "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js"</script>
+
+
+
+
+</head>
+
+<body>
+    <main>
+        <form> 
+            <label for="userId">User ID</label> <br>
+            <input type="text" name="userid" id="userid"> <br>
+            <label for="firstName">First Name</label> <br>
+            <input type="text" name="firstName" id="firstName"> <br>
+            <label for="lastName">Last Name</label> <br>
+            <input type="text" name="lastName" id="lastName"> <br>
+            <label for="age">age</label> <br>
+            <input type="number" name="age" id="age"> <br>
+            <button id = "addBtn" class="btn waves-effect waves-light">add</button>
+            <button id = "updateBtn" class="btn waves-effect waves-light">update</button>
+            <button id = "removeBtn" class="btn waves-effect red darken-1">remove</button>
+
+        </form>
+    </main>
+
+ <script>
+     const userId = document.getElementById('userId');
+     const firstName = document.getElementById('firstName');
+     const lastName = document.getElementById('lastName');
+     const age= document.getElementById('age');
+     const addBtn = document.getElementById('addBtn');
+     const updateBtn = document.getElementById('updateBtn');
+     const removeBtn = document.getElementById('removeBtn');
+     addBtn.addEventListener('click', (e) => {
+         e.preventDefault();
+         database.ref('/users/' + userId.value).set({
+             first_name: firstName.value,
+             last_name: lastName.value,
+             age: age.value
+         });
+     });
+ </script>
+
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-analytics.js";
+    import { getDatabase} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDoSzxa9ed4W4lS87FDwYVEwVjPJj1phC8",
+  authDomain: "supersimple-website.firebaseapp.com",
+  databaseURL: "https://supersimple-website-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "supersimple-website",
+  storageBucket: "supersimple-website.appspot.com",
+  messagingSenderId: "760195453629",
+  appId: "1:760195453629:web:1af0aad954853626a49dd4",
+  measurementId: "G-S9XD0K7TDN"
+};
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+         
+  </script>
+
+</body>
+</html>
