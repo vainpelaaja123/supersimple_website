@@ -6,18 +6,117 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        body {text-align: center;}
-        #enterDetails {float: left; width: 50%;  background-color: darkslategray; color: floralwhite;}
-        #findDetails {float: left; width: 50%; background-color: floralwhite; color: darkslategray;}
-        input {width: 120px;}
-    </style>
+     
+body, html{
+
+margin: 0;
+padding: 0;
+}
+
+#enterDetails{
+text-align: center;
+    float: left;
+    width:60%;
+    color: white;
+    
+}
+
+#findDetails{
+    color: white;
+
+}
+input{
+    width: 120px;
+}
+
+button{
+
+
+    
+    background-color: navy; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 22px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    
+
+}
+button:hover {
+    background-color: #282880;
+    color: white;
+    
+    
+    }
+    
+
+
+body {
+background-color:#444654;
+font-family: Helvetica, sans-serif; }
+       
+       .header {
+  padding: 15px;
+  text-align: center;
+  background: url("img/profpic.jpg") no-repeat,
+              linear-gradient(navy, #444654);
+color: white;
+}
+   
+#headlist{
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+        border-radius: 0px;
+        border: none;
+       }
+
+
+       li1{
+        float: left;}
+    
+    
+        li1 a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 10px 16px;
+      text-decoration: none;
+      border-right: 1px solid black ;
+    }
+    
+    li1 a:hover {
+      background-color: navy;
+    }
+
+   
+   </style>
 </head>
 <body>
+
+
+    <div class="header">
+        <h2>database </h2>
+
+    </div>
+
+        <ul id = "headlist">
+            <li1> <a class="active" href="/supersimple_website/"> Home </a></li1>
+            <li1> <a class="active" href="/supersimple_website/TimeList.html"> Time List </a></li1>
+            <li1> <a class="active" href="https://www.youtube.com/@progamer_55"> Youtube</a></li1>
+        </ul>
+
     <div id="enterDetails">
         <h1>Enter details</h1>
 
         <h4>ID</h4> 
-        <input id="enterID" type="text"> 
+        <input id="enterID" type="number"> 
 
         <h4>Name</h4> 
         <input id="enterName" type="text"> 
