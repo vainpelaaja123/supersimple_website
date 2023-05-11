@@ -2,13 +2,12 @@
 <html lang="en">
 
 <head>
-    <title>Spotify_lis</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currently listening to</title>
     <link rel="shortcut icon" href="img/nimetön1.png" type="image/x-icon">
-    <meta charset="utf-8">
-    <meta name="viewport" content=" width=device-width, initial-scale=1">
-  
-   
-    <style>
+
+<style>
 
         body, html{
     
@@ -30,7 +29,7 @@
     
       
         
-    ul{
+    .kuusysi{
         list-style-type: none;
         margin: 0;
         padding: 0;
@@ -38,7 +37,7 @@
         background-color: #333;
        }
     
-       li{
+       .kuuskasi{
         float: left;}
     
     
@@ -66,17 +65,81 @@
         
         }
     
-        p1{
+        .p1{
     color: white;
     font-size: 20px;
     
         }
-    
-    </style>
-   
-   <script>
 
-var redirect_uri = "http://127.0.0.1:5500/spotify.html"; // change this your value
+
+.playing{
+
+    color: white;
+    padding-left: 5px;
+   
+}
+
+.trackinfo{
+
+    text-align: center;
+    color: white;
+    font-size: 25px;
+    font-family: Helvetica, sans-serif;
+    letter-spacing: 1px;
+   padding: 10px;
+    
+}
+
+.albumImage{
+
+    border-radius: 15px;
+   width: 200px;
+   height: auto;
+  
+
+}
+
+.trackTitle{
+
+padding: 5px;   
+
+}
+.trackArtist{
+
+padding: 5px;
+
+}
+
+
+.btn-primary{
+
+    padding: 4px;
+    border-radius: 7px;
+    color: white;
+    background-color: #333;
+    letter-spacing: 1px;
+    
+
+}
+
+.btn-primary:hover{
+
+    background-color: navy;
+    box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.3);
+}
+
+
+.container{
+
+    padding-left: 5px;
+}
+
+    
+</style>
+ 
+   
+<script> 
+    var redirect_uri = "https://vainpelaaja123.github.io/supersimple_website/"; // change this your value
 //var redirect_uri = "http://127.0.0.1:5500/index.html";
  
 
@@ -202,9 +265,6 @@ function handleAuthorizationResponse(){
     }
 }
 
-/*function refreshDevices(){
-    callApi( "GET", DEVICES, null, handleDevicesResponse );
-}
 
 function handleDevicesResponse(){
     if ( this.status == 200 ){
@@ -222,13 +282,6 @@ function handleDevicesResponse(){
     }
 }
 
-function addDevice(item){
-    let node = document.createElement("option");
-    node.value = item.id;
-    node.innerHTML = item.name;
-    document.getElementById("devices").appendChild(node); 
-}
-
 function callApi(method, url, body, callback){
     let xhr = new XMLHttpRequest();
     xhr.open(method, url, true);
@@ -238,9 +291,6 @@ function callApi(method, url, body, callback){
     xhr.onload = callback;
 }
 
-function refreshPlaylists(){
-    callApi( "GET", PLAYLISTS, null, handlePlaylistsResponse );
-}
 
 function handlePlaylistsResponse(){
     if ( this.status == 200 ){
@@ -259,60 +309,9 @@ function handlePlaylistsResponse(){
     }
 }
 
-function addPlaylist(item){
-    let node = document.createElement("option");
-    node.value = item.id;
-    node.innerHTML = item.name + " (" + item.tracks.total + ")";
-    document.getElementById("playlists").appendChild(node); 
-}
 
-function removeAllItems( elementId ){
-    let node = document.getElementById(elementId);
-    while (node.firstChild) {
-        node.removeChild(node.firstChild);
-    }
-}
 
-function play(){
-    let playlist_id = document.getElementById("playlists").value;
-    let trackindex = document.getElementById("tracks").value;
-    let album = document.getElementById("album").value;
-    let body = {};
-    if ( album.length > 0 ){
-        body.context_uri = album;
-    }
-    else{
-        body.context_uri = "spotify:playlist:" + playlist_id;
-    }
-    body.offset = {};
-    body.offset.position = trackindex.length > 0 ? Number(trackindex) : 0;
-    body.offset.position_ms = 0;
-    callApi( "PUT", PLAY + "?device_id=" + deviceId(), JSON.stringify(body), handleApiResponse );
-}
 
-function shuffle(){
-    callApi( "PUT", SHUFFLE + "?state=true&device_id=" + deviceId(), null, handleApiResponse );
-    play(); 
-}
-
-function pause(){
-    callApi( "PUT", PAUSE + "?device_id=" + deviceId(), null, handleApiResponse );
-}
-
-function next(){
-    callApi( "POST", NEXT + "?device_id=" + deviceId(), null, handleApiResponse );
-}
-
-function previous(){
-    callApi( "POST", PREVIOUS + "?device_id=" + deviceId(), null, handleApiResponse );
-}
-
-function transfer(){
-    let body = {};
-    body.device_ids = [];
-    body.device_ids.push(deviceId())
-    callApi( "PUT", PLAYER, JSON.stringify(body), handleApiResponse );
-}
 
 function handleApiResponse(){
     if ( this.status == 200){
@@ -331,9 +330,7 @@ function handleApiResponse(){
     }    
 }
 
-function deviceId(){
-    return document.getElementById("devices").value;
-}
+
 
 function fetchTracks(){
     let playlist_id = document.getElementById("playlists").value;
@@ -359,12 +356,6 @@ function handleTracksResponse(){
     }
 }
 
-function addTrack(item, index){
-    let node = document.createElement("option");
-    node.value = index;
-    node.innerHTML = item.track.name + " (" + item.track.artists[0].name + ")";
-    document.getElementById("tracks").appendChild(node); 
-}
 
 function currentlyPlaying(){
     callApi( "GET", PLAYER + "?market=US", null, handleCurrentlyPlayingResponse );
@@ -406,44 +397,9 @@ function handleCurrentlyPlayingResponse(){
     }
 }
 
-function saveNewRadioButton(){
-    let item = {};
-    item.deviceId = deviceId();
-    item.playlistId = document.getElementById("playlists").value;
-    radioButtons.push(item);
-    localStorage.setItem("radio_button", JSON.stringify(radioButtons));
-    refreshRadioButtons();
-}
+setInterval(currentlyPlaying, 20000);
 
-function refreshRadioButtons(){
-    let data = localStorage.getItem("radio_button");
-    if ( data != null){
-        radioButtons = JSON.parse(data);
-        if ( Array.isArray(radioButtons) ){
-            removeAllItems("radioButtons");
-            radioButtons.forEach( (item, index) => addRadioButton(item, index));
-        }
-    }
-}
 
-function onRadioButton( deviceId, playlistId ){
-    let body = {};
-    body.context_uri = "spotify:playlist:" + playlistId;
-    body.offset = {};
-    body.offset.position = 0;
-    body.offset.position_ms = 0;
-    callApi( "PUT", PLAY + "?device_id=" + deviceId, JSON.stringify(body), handleApiResponse );
-    //callApi( "PUT", SHUFFLE + "?state=true&device_id=" + deviceId, null, handleApiResponse );
-}
-
-function addRadioButton(item, index){
-    let node = document.createElement("button");
-    node.className = "btn btn-primary m-2";
-    node.innerText = index;
-    node.onclick = function() { onRadioButton( item.deviceId, item.playlistId ) };
-    document.getElementById("radioButtons").appendChild(node);
-}
-*/
 
 
 
@@ -452,75 +408,62 @@ function addRadioButton(item, index){
 
 <body onload="onPageLoad()">
 
-    <div class="header">
+
+
+ <div class="header">
         <h2>Progamer_55 </h2>
         
 
     </div>
 
-    <ul>
-        <li> <a class="active" href="/supersimple_website/"> Home </a></li1>
-        <li> <a class="active" href="/supersimple_website/TimeList.html"> Time List </a></li>
-        <li> <a class="active" href="/supersimple_website/database.html"> database? </a></li>
-        <li> <a class="active" href="https://www.youtube.com/@progamer_55"> Youtube</a></li>
-        <li> <a class="active" href="/supersimple_website/spotify.html"> Spotify?</a></li>
+    <ul class="kuusysi">
+        <li class="kuuskasi"> <a class="active" href="/supersimple_website/"> Home </a></li1>
+        <li class="kuuskasi"> <a class="active" href="/supersimple_website/TimeList.html"> Time List </a></li>
+        <li class="kuuskasi"> <a class="active" href="/supersimple_website/database.html"> database? </a></li>
+        <li class="kuuskasi"> <a class="active" href="https://www.youtube.com/@progamer_55"> Youtube</a></li>
+        <li class="kuuskasi"> <a class="active" href="/supersimple_website/spotify.html"> Spotify?</a></li>
 
     </ul>
 
 
-</body>
+    <div class="container">
 
-</html>
-
-
-<!--
-<div class="container">
-
-    <div id="tokenSection" class="row">
-        <div class="col">
-            <p class="welcomeText">This is a javascript app that shows how to use the Spotify API to control the playback 
-                of music (playlist or albums) on any of your devices connected to your spotify account.</p>
-            <p class="welcomeText">To use this app you need a Spotify client ID and client secret. You get these by 
-                creating an app in the Spotify developers dashboard here 
-                <a href="https://developer.spotify.com/dashboard/applications" target="_blank">https://developer.spotify.com/dashboard/applications</a> 
-                 and add https://makeratplay.github.io/SpotifyWebAPI/ in the "Redirect URIs" settings field.
-            </p>                    
-            <p  class="welcomeText"> 
-                This app demostrates how the use the following APIs: 
-                <ul>
-                    <li>https://accounts.spotify.com/authorize </li>
-                    <li>https://accounts.spotify.com/api/token </li>
-                
-                    <li>https://api.spotify.com/v1/me/playlists </li>
-                    <li>https://api.spotify.com/v1/me/player/devices </li>
-                    <li>https://api.spotify.com/v1/me/player/play </li>
-                    <li>https://api.spotify.com/v1/me/player/pause </li>
-                    <li>https://api.spotify.com/v1/me/player/next </li>
-                    <li>https://api.spotify.com/v1/me/player/previous </li>
-                    <li>https://api.spotify.com/v1/me/player </li>
-                    <li>https://api.spotify.com/v1/playlists/{{PlaylistId}}/tracks </li>
-                    <li>https://api.spotify.com/v1/me/player/currently-playing </li>
-                    <li>https://api.spotify.com/v1/me/player/shuffle </li>
-                </ul>
-            </p>                    
-            
-        </div>
-        <div class="col">
-            <div class="mb-3">
-                <label for="clientId" class="form-label">Client ID</label>
-                <input type="text" class="form-control" id="clientId" placeholder="">
+        <div id="tokenSection" class="row">
+           
+             <div class="row mt-3">
+                    <div class="col">
+                        <h1 class="playing"> Currently listening:</h1>
+                        
+                        <div class="trackinfo">
+                            <div class = "trackTitle" ; id="trackTitle"></div>
+                            <div class = "trackArtist" ; id="trackArtist"></div>
+                            <img class = "albumImage" ; id="albumImage" src="">                        
+                        </div>
+                        <input type="button" class="btn btn-primary btn-sm mt-3" onclick="currentlyPlaying()" value="Refresh Currently Playing">
             </div>
-            <div class="mb-3">
-                <label for="clientSecret" class="form-label">Client Secret</label>
-                <input type="text" class="form-control" id="clientSecret" placeholder="">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="clientId" class="form-label">Client ID</label>
+                    <input type="text" class="form-control" id="clientId" placeholder="">
+                </div>
+                <div class="mb-3">
+                    <label for="clientSecret" class="form-label">Client Secret</label>
+                    <input type="text" class="form-control" id="clientSecret" placeholder="">
+                </div>
+                <input class="btn btn-primary btn-lg" type="button" onclick="requestAuthorization()" value="Request Authorization"><br/>
             </div>
-            <input class="btn btn-primary btn-lg" type="button" onclick="requestAuthorization()" value="Request Authorization"><br/>
-        </div>
 
-        <div class="col">
-            <p class="welcomeText" style="margin-top: 40px;"> I used this project to learn the Spotify API in order to create this project:</p>
-            
+           
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 
--->
+
+</body>
+
+
+</html>
