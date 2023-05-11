@@ -205,9 +205,9 @@ function getCode(){
 
 function requestAuthorization(){
     client_id = "f26cf44944f94c66af19d4c100b1c30a"
-        //document.getElementById("clientId").value;
+    //document.getElementById("clientId").value;
     client_secret = "518bdf7c495e420a9e5f28b4eb44ccc3"
-        //document.getElementById("clientSecret").value;
+    //document.getElementById("clientSecret").value;
     localStorage.setItem("client_id", client_id);
     localStorage.setItem("client_secret", client_secret); // In a real app you should not expose your client_secret to the user
 
@@ -443,7 +443,7 @@ setInterval(currentlyPlaying, 20000);
                         </div>
                         <input type="button" class="btn btn-primary btn-sm mt-3" onclick="currentlyPlaying()" value="Refresh Currently Playing">
             </div>
-            <div class="col">
+           <!-- <div class="col">
                 <div class="mb-3">
                     <label for="clientId" class="form-label">Client ID</label>
                     <input type="text" class="form-control" id="clientId" placeholder="">
@@ -452,7 +452,8 @@ setInterval(currentlyPlaying, 20000);
                     <label for="clientSecret" class="form-label">Client Secret</label>
                     <input type="text" class="form-control" id="clientSecret" placeholder="">
                 </div>
-                <input class="btn btn-primary btn-lg" type="button" onclick="requestAuthorization()" value="Request Authorization"><br/>
+                -->
+                <input class="btn btn-primary btn-lg" type="button" onclick="requestAuthorization()" value="Login with spotify "><br/>
             </div>
 
            
