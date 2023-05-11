@@ -204,8 +204,10 @@ function getCode(){
 }
 
 function requestAuthorization(){
-    client_id = document.getElementById("clientId").value;
-    client_secret = document.getElementById("clientSecret").value;
+    client_id = "f26cf44944f94c66af19d4c100b1c30a"
+        //document.getElementById("clientId").value;
+    client_secret = "518bdf7c495e420a9e5f28b4eb44ccc3"
+        //document.getElementById("clientSecret").value;
     localStorage.setItem("client_id", client_id);
     localStorage.setItem("client_secret", client_secret); // In a real app you should not expose your client_secret to the user
 
