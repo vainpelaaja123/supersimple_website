@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link rel="stylesheet" href="hello_styles.css">
+        <title>Weather</title>
+        <link rel="shortcut icon" href="img/nimetön1.png" type="image/x-icon">
+
+        
+        <!--  <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />  -->
+        
+        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+        <script>
+          function getCityName() {
+        var cityName = document.getElementById("cityInput").value;
+        if (cityName) {
+            console.log("City name entered:", cityName);
+            return cityName;
+        } else {
+            console.log("No city name entered.");
+            return "";
+        }
+        
+    }
+
+         
+           
+        </script>
+    </head>
+    <body>
+
+
+      <input type="text" id="cityInput"/>
+      
+      
+      <button py-click="get_weather()" id="run_python" class="button">Set location</button>
+     
+     
+      <p class = "tuloste" id="nimi"></p>
+      <p class = "tuloste" id="kuvaus"></p>
+      <p class = "tuloste" id="lampo"></p>
+      <p class = "tuloste" id="kosteus"></p>
+      <p class = "tuloste" id="pilvi"></p>
+
+
+      <py-config>
+        packages = ["requests", "pyodide-http"]
+      </py-config>
+
+      <py-script>
+import requests
+import pyodide_http
+from js import getCityName
+
+             
+        
+        
+        
+        
+        
+        # Patch the Requests library so it works with Pyscript
+pyodide_http.patch_all()
+
+
+def get_weather():
+  
+  
+  api_key = '78eff36159a29dd4337140fea224081a'
+  location = getCityName()
+  url = f'http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&units=metric'
+
+
+  response = requests.get(url)
+  data = response.json()
+
+
+
+  if response.status_code == 200:
+    nimi = data['name']
+    kuvaus = data['weather'][0]['description']
+    lampo = str(data['main']['temp'])
+    kosteus = str(data['main']['humidity'])
+    pilvi = str(data['clouds']['all'])
+
+    paragraph = Element("nimi")
+    paragraph.write(nimi)
+    
+    paragraph = Element("kuvaus")
+    paragraph.write("Description: " + kuvaus)
+
+    paragraph = Element("lampo")
+    paragraph.write("temperature: " + lampo + "°C")
+
+    paragraph = Element("kosteus")        
+    paragraph.write("Humidity: " + kosteus + "%")
+
+    paragraph = Element("pilvi")
+    paragraph.write("Cloudiness: " + pilvi + "%")
+
+  else:
+    print('Error: ' , data['message'])
+
+        
+      </py-script>
+    </body>
+</html>
