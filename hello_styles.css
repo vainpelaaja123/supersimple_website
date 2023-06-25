@@ -133,13 +133,27 @@ body, html{
         font-size: 25px;
         text-decoration: underline;
         font-weight: bold;
+        
+    }
+
+
+    #aika{
+
+      position: relative;
+      top: -40px;
+      font-size: 13px;
+
     }
 
     .tuloste{
 
-
+    font-size: 18px;
     color: white;
     text-indent: 100px;
+    position: relative;
+    top: -20px;
+    
+
    
     
 
