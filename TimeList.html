@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!-- saved from url=(0036)https://vainpelaaja123.w3spaces.com/ -->
+<html><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	<link rel="stylesheet" href="styles.css">
+<!--	<script type= "module" src="scripts.js"></script> -->
+	<title>Time List</title>
+	<link rel="shortcut icon" href="img/nimetön1.png" type="image/x-icon">	
+
+
+
+</head>
+<body>
+
+	<div class="header">
+        <h1>Time List </h1>
+
+	</div>
+
+	
+<ul id = "headlist">
+	<li1> <a class="active" href="/"> Home </a></li1>
+    <li1> <a class="active" href="/TimeList"> Time List </a></li1>
+	<li1> <a class="active" href="/database"> database? </a></li1>
+    <li1> <a class="active" href="https://www.youtube.com/@progamer_55"> Youtube</a></li1>
+    <li1> <a class="active" href="/spotify"> Spotify?</a></li1>
+    <li1> <a class="active" href="/weather"> weather</a></li1>
+</ul>
+
+<br>
+<br>
+<br>
+<br>
+
+	<button id="addtimeBTN">Add Time</button>
+    <button id="findtimeBTN">find time</button>
+    <h3 id="findName" type="text"></h3>
+    
+	<ul id="timeList"><li>00.52</li><li>00.56</li><li>01.00</li><li>01.01</li><li>01.14</li><li>01.15</li><li>01.18</li><li>10.50</li><li>12.20</li><li>12.21</li><li>12.31</li><li>12.32</li><li>12.37</li><li>12.45</li><li>12.48</li><li>13.07</li><li>13.11</li><li>13.12</li><li>13.13</li><li>13.14</li><li>13.15</li><li>13.17</li><li>13.18</li><li>13.19</li><li>13.20</li><li>13.21</li><li>13.22</li><li>13.23</li><li>13.26</li><li>13.27</li><li>13.28</li><li>13.29</li><li>13.30</li><li>14.11</li><li>16.07</li><li>16.12</li><li>16.15</li><li>16.22</li><li>16.23</li><li>16.29</li><li>16.30</li><li>16.33</li><li>16.35</li><li>16.41</li><li>16.42</li><li>16.46</li><li>16.48</li><li>16.56</li><li>16.59</li><li>17.02</li><li>17.27</li><li>17.30</li><li>17.32</li><li>17.36</li><li>17.37</li><li>17.39</li><li>17.42</li><li>17.43</li><li>17.44</li><li>17.46</li><li>17.48</li><li>17.49</li><li>17.50</li><li>17.51</li><li>17.55</li><li>17.56</li><li>17.57</li><li>18.02</li><li>18.03</li><li>18.04</li><li>18.08</li><li>18.09</li><li>18.14</li><li>18.16</li><li>18.20</li><li>18.21</li><li>18.22</li><li>18.23</li><li>18.26</li><li>18.27</li><li>18.30</li><li>18.42</li><li>18.43</li><li>18.52</li><li>22.03</li><li>22.41</li><li>22.49</li><li>22.52</li><li>23.02</li>
+	</ul>
+
+<script type="module">
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+ // TODO: Add SDKs for Firebase products that you want to use
+ // https://firebase.google.com/docs/web/setup#available-libraries
+
+ // Your web app's Firebase configuration
+ const firebaseConfig = {
+   apiKey: "AIzaSyCh0iDPUpcWU4-Unh87QFHnyZsvzkpcWFo",
+   authDomain: "enkeksi-37bd0.firebaseapp.com",
+   databaseURL: "https://enkeksi-37bd0-default-rtdb.firebaseio.com",
+   projectId: "enkeksi-37bd0",
+   storageBucket: "enkeksi-37bd0.appspot.com",
+   messagingSenderId: "243719375680",
+   appId: "1:243719375680:web:baf11ba478ab6aecc2c8a5"
+ };
+
+ // Initialize Firebase
+ const app = initializeApp(firebaseConfig);
+       //THIS IS WHERE YOU PASTE THE CODE TO CONNECT TO YOUR OWN DATABASE
+       //Copy and paste the CDN bit of code from your app that you created on Firebase.
+       //The script tag above is already there, so careful not to have duplicate script tags.
+       //After you've copied and pasted, just delete the unnecessary script tags. 
+  
+
+       import {getDatabase, ref, get, set, child, update, remove}
+       from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js" //Copy and Paste the URL from near the top of the CDN you pasted in from firebase
+       // (the one where you imported "initializeApp" from),
+       //but change "firebase-app" to "firebase-database"
+       
+
+       const db = getDatabase();
+
+	   var addtimeBTN = document.querySelector("#addtimeBTN");
+       var findtimeBtn = document.querySelector("#findtimeBTN");
+
+       
+    
+
+function addTime() {
+
+    // Get the current time without seconds
+    var currentTime = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+  
+
+        set(child(ref(db), 'times/'+Date.now()),{
+        time: currentTime,
+      
+      })
+        .then(() => {
+          alert('Data added successfully');
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    
+    /* // Check if the time is already in the list
+    var timeList = document.getElementById("timeList");
+    var times = timeList.getElementsByTagName("li");
+    var alreadyExists = false;
+    for (var i = 0; i < times.length; i++) {
+        if (times[i].textContent === currentTime) {
+            alreadyExists = true;
+            break;
+        }
+    }
+*/
+
+
+   /* // Add the time to the list if it doesn't already exist
+    if (!alreadyExists) {
+        var newTime = document.createElement("li");
+        newTime.textContent = currentTime;
+
+        // Find the correct position for the new item
+        var inserted = false;
+        for (var i = 0; i < times.length; i++) {
+            if (currentTime < times[i].textContent) {
+                timeList.insertBefore(newTime, times[i]);
+                inserted = true;
+                break;
+            }
+        }
+
+        // If the new item is the latest, append it to the end
+        if (!inserted) {
+            timeList.appendChild(newTime);
+        }
+
+        // Save the times to Local Storage
+        localStorage.setItem("times", timeList.innerHTML);
+    }*/
+
+
+};
+
+function findtime() {
+
+    const dbref = ref(db);
+
+            get(child(dbref, "times/"))
+            .then((snapshot)=>{
+                if (snapshot.exists()) {
+                    findName.innerHTML = "time: " + snapshot.val().time;
+                    }
+                    else{
+                    alert("No data found");
+                    }
+            })
+            .catch((error)=>{
+                alert(error)
+            })
+    
+        };
+
+
+
+
+
+findtimeBTN.addEventListener('click', findtime);
+addtimeBTN.addEventListener('click', addTime);
+
+</script>
+
+</body></html>

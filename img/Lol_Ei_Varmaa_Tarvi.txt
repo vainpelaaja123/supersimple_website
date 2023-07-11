@@ -1,0 +1,11 @@
+https://accounts.spotify.com/fi/authorize?client_id=f26cf44944f94c66af19d4c100b1c30a
+&response_type=code
+&redirect_uri=http://127.0.0.1:5500/spotify.html
+&show_dialog=true
+&scope=user-read-private%20user-read-email%20user-modify-playback-state%20user-read-playback-position%20user-library-read%20streaming%20user-read-playback-state%20user-read-recently-played%20playlist-read-private
+
+
+http://127.0.0.1:5500/spotify.html?code=AQCzhelBMOlADFqinYIcWGgTC_UyYVaEL9dC6FTE-qGISJhADbIkwReKlnQoUCmvAjizC2Dht2Ul9WW-Cw9Vbx6LpQHSMtfxoOR4yGNd16CPf3bZD_C9poWN8shaztIln1aO1OfaMfb80oIvgmlqJsIKL1DUmy1wNctlppnmRiLo0EuByuVYaSPR3tIDAf0YCN2NWj_Aqj9zbvQXHYSlyNTaWg5XUx5vmJ3d1sNdgg8cwApwHg1NNaSATk61g3ExPc2i8wTOHi0eWljBF0Qrx-O4O1qv678jk7CVTQ6Ey-0hNYDzETaw0OwtEWtm5cZBRoxosqeXW4Y4KDmo-Nq3ASKc9QIh_5AFfI_EMuBB0SZxI6C4E-l_FV-l1YvuRwmC8YMeeWkLTiPH0wx8BQN4qT48-y1GNnR_HfBcgGJ3hujlHYRAMP02D_mG-n5X
+
+
+https://ashleygingeleski.com/2019/11/11/spotify-web-api-how-to-pull-and-clean-top-song-data-using-python/
