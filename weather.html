@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link rel="stylesheet" href="hello_styles.css">
+        <title>Weather</title>
+        <link rel="shortcut icon" href="img/nimetön1.png" type="image/x-icon">
+
+        
+        <!--  <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />  -->
+        
+        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
+      </head>
+
+      <body>
+        <script>
+
+
+          function getCityName() {
+        var cityName = document.getElementById("cityInput").value;
+        if (cityName) {
+            console.log("City name entered:", cityName);
+            return cityName;
+        } else {
+            console.log("No city name entered.");
+            return "";
+        }
+
+    }
+
+//get link from python
+    function showX() {
+  var link = `${pyscript.interpreter.globals.get('link')}`; // Get the new image link
+  console.log(`In Python right now, x = ${pyscript.interpreter.globals.get('link')}`);
+  console.log('works');
+
+  var imageElement = document.createElement('img');
+  imageElement.src = link;
+  imageElement.alt = 'Image Description';
+
+  // Remove the existing image element, if it exists
+  var imageContainer = document.getElementById('imageContainer');
+  var existingImageElement = imageContainer.querySelector('img');
+  if (existingImageElement) {
+    imageContainer.removeChild(existingImageElement);
+  }
+
+  // Append the new <img> element to the container in the webpage
+  imageContainer.appendChild(imageElement);
+}
+
+        
+        
+        
+
+    function delay(){
+
+      setTimeout(showX,1)
+      
+    }  
+         
+           
+        </script>
+    
+    
+      
+
+      <input type="text" id="cityInput"/>
+      
+      
+      <button py-click="get_weather()" onclick="delay()" id="run_python" class="button">Set location</button>
+     
+
+      <div id="imageContainer"></div>  
+     
+      <p class = "tuloste" id="nimi"></p>
+      <p class = "tuloste" id="aika"></p>
+      <p class = "tuloste" id="kuvaus"></p>
+      <p class = "tuloste" id="lampo"></p>
+      <p class = "tuloste" id="kosteus"></p>
+      <p class = "tuloste" id="pilvi"></p>
+
+      
+
+
+      <py-config>
+        packages = ["requests", "pyodide-http"]
+      </py-config>
+
+      <py-script>
+import requests
+import pyodide_http
+from js import getCityName
+import datetime
+
+  #https://openweathermap.org/current#list
+             
+        
+        
+        
+        
+        
+        # Patch the Requests library so it works with Pyscript
+pyodide_http.patch_all()
+
+
+def get_weather():
+  
+  
+  api_key = '78eff36159a29dd4337140fea224081a'
+  location = getCityName()
+  url = f'https://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&units=metric'
+
+
+  response = requests.get(url)
+  data = response.json()
+
+  
+
+  if response.status_code == 200:
+    nimi = data['name']
+    kuvaus = data['weather'][0]['description']
+    lampo = str(data['main']['temp'])
+    kosteus = str(data['main']['humidity'])
+    pilvi = str(data['clouds']['all'])
+
+    
+
+    
+
+    
+    
+    
+      
+    
+
+    
+
+
+
+    
+        #get the current time get the difference works only in summer time!!!
+    current_time_a_unix = (data['dt']) - 10800
+    time_difference_seconds = (data['timezone'])
+    current_time_a = datetime.datetime.fromtimestamp(current_time_a_unix)
+    current_time_b = current_time_a + datetime.timedelta(seconds=time_difference_seconds)
+    aika = str((current_time_b))
+   
+       
+     
+           
+    paragraph = Element("nimi")
+    paragraph.write(nimi)
+
+    paragraph = Element("aika")
+    paragraph.write(aika)
+    
+    paragraph = Element("kuvaus")
+    paragraph.write("Description: " + kuvaus)
+
+    paragraph = Element("lampo")
+    paragraph.write("temperature: " + lampo + "°C")
+
+    paragraph = Element("kosteus")        
+    paragraph.write("Humidity: " + kosteus + "%")
+
+    paragraph = Element("pilvi")
+    paragraph.write("Cloudiness: " + pilvi + "%")
+
+    x = data['weather'][0]['icon']
+
+    global link  
+    link = f'https://openweathermap.org/img/wn/{x}@2x.png'
+    return link      
+    
+
+  else:
+    print('Error: ' , data['message'])
+
+
+
+    
+
+
+      </py-script>
+    </body>
+</html>
