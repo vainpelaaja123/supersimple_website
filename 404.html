@@ -10,11 +10,21 @@ body, html{
 
 margin: 0;
 padding: 0;
+
+background-color:#444654;
+font-family: Helvetica, sans-serif;
+
+height: 100%;
+margin: 0;
 }
 
-body {
-background-color:#444654;
-font-family: Helvetica, sans-serif; }
+
+img {
+            position: absolute;
+            top: 69%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
 
 .header {
 padding: 15px;
@@ -76,6 +86,11 @@ padding: 10px;
 
 }
 
+.link:hover{
+
+color: navy;
+
+}
 
 
 
@@ -91,11 +106,23 @@ padding: 10px;
 
     </div>
 
+    <ul>
+        <li> <a class="active" href="/"> Home </a></li1>
+        <li> <a class="active" href="/Timelist"> Time List </a></li>
+        <li> <a class="active" href="/database"> database? </a></li>
+        <li> <a class="active" href="https://www.youtube.com/@progamer_55" target="_blank"> Youtube</a></li>
+        <li> <a class="active" href="/spotify"> Spotify?</a></li>
+        <li> <a class="active" href="/weather"> weather</a></li>
+        <li> <a class="active" href="/currentlylistening"> currently listening</a></li>
+    </ul>
 
-    
-    <p1 class="teksti">this page does not exist! :( </p1>
 
-    <a href="/" class="teksti">Go back Home </a>
+   
+    <p1 class="teksti">this page does not exist :( </p1>
+
+    <a href="/" class="teksti link">Go back Home </a>
+
+    <img src="img/404pic2.png">
 
 
 </body>
