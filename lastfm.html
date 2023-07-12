@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recent Tracks</title>
+    <style>
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1></h1>
+    <ul id="track-list"></ul>
+
+    <script>
+        // Function to fetch and display the data
+        function fetchAndDisplayData() {
+            var url = 'http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=vainpelaaja123&api_key=1e7a90f18093d941dedadf8f27864bf3&format=json';
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    var recentTracks = data.recenttracks.track;
+                    var trackList = document.getElementById('track-list');
+
+                    // Check if there is a currently playing track
+                    if (recentTracks[0]['@attr'] && recentTracks[0]['@attr'].nowplaying === 'true') {
+                        var artist = recentTracks[0].artist['#text'];
+                        var trackName = recentTracks[0].name;
+                       
+
+                        var listItem = document.createElement('li');
+                        listItem.innerHTML = `<strong>${artist}</strong> - ${trackName}`;
+                        trackList.appendChild(listItem);
+                    } else {
+                        // Display the last 10 tracks
+                        recentTracks.slice(0, 10).forEach(function(track) {
+                            var artist = track.artist['#text'] || 'Unknown Artist';
+                            var trackName = track.name || 'Unknown Track';
+                            
+                            
+
+                            var listItem = document.createElement('li');
+                            listItem.innerHTML = `<strong>${artist}</strong> - ${trackName}`;
+                            trackList.appendChild(listItem);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Call the function to fetch and display the data
+        fetchAndDisplayData();
+    </script>
+</body>
+</html>
