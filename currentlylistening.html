@@ -11,11 +11,29 @@
         li {
             margin-bottom: 10px;
         }
+
+        #myImage{
+
+            border-radius: 10px;
+           
+            
+        }
+
+        #currentlyPlaying{
+
+            font-size: 20px;
+        
+        }
+
     </style>
 </head>
 <body>
     <h1></h1>
     <ul id="track-list"></ul>
+    
+    <img id="myImage" alt="album art">
+    <div id="currentlyPlaying"></div>
+    
 
     <script>
         // Function to fetch and display the data
@@ -32,12 +50,23 @@
                     if (recentTracks[0]['@attr'] && recentTracks[0]['@attr'].nowplaying === 'true') {
                         var artist = recentTracks[0].artist['#text'];
                         var trackName = recentTracks[0].name;
+                        var imageUrl = data.recenttracks.track[0].image.find(img => img.size === 'large')["#text"];
+
+                        console.log(imageUrl);
+
+                        // Set the src attribute of the image element
+                        var imageElement = document.getElementById('myImage');
+                        imageElement.src = imageUrl;                        
+
+                        
+
                        
 
-                        var listItem = document.createElement('li');
-                        listItem.innerHTML = `<strong>${artist}</strong> - ${trackName}`;
-                        trackList.appendChild(listItem);
+                        var currentlyPlayingText = `I'm currently listening to:   ${trackName} by <strong>${artist}</strong>`;
+                        currentlyPlaying.innerHTML = currentlyPlayingText;
+                        
                     } else {
+                        currentlyPlaying.innerHTML = "Looks like I'm not listening to anything. Here are the last 10 songs I listened to: ";
                         // Display the last 10 tracks
                         recentTracks.slice(0, 10).forEach(function(track) {
                             var artist = track.artist['#text'] || 'Unknown Artist';
@@ -46,7 +75,7 @@
                             
 
                             var listItem = document.createElement('li');
-                            listItem.innerHTML = `<strong>${artist}</strong> - ${trackName}`;
+                            listItem.innerHTML = `${trackName} by <strong>${artist}</strong>`;
                             trackList.appendChild(listItem);
                         });
                     }
@@ -58,6 +87,9 @@
 
         // Call the function to fetch and display the data
         fetchAndDisplayData();
+
+        setInterval( fetchAndDisplayData, 20000);
+
     </script>
 </body>
 </html>
