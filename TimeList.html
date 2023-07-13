@@ -35,10 +35,9 @@
 
 	<button id="addtimeBTN">Add Time</button>
     <button id="findtimeBTN">find time</button>
-    <h3 id="findName" type="text"></h3>
+    <div id="findName"></div>
     
-	<ul id="timeList">
-	</ul>
+	
 
 <script type="module">
 
@@ -138,31 +137,36 @@ function addTime() {
 
 };
 
-function findTime() {
+function findtime() {
   const dbref = ref(db);
-  const timesRef = child(dbref, "times/");
 
-  get(timesRef)
+  get(child(dbref, "times/"))
     .then((snapshot) => {
       if (snapshot.exists()) {
         const times = snapshot.val();
+        const findName = document.getElementById("findName");
+        let timeListHTML = ""; // Initialize an empty string to store the HTML for the time list
+        const uniqueTimes = new Set(); // Use a Set to keep track of unique times
 
-        // Iterate over each time object in the JSON
+        // Iterate over each key in the 'times' object
         for (const key in times) {
           if (times.hasOwnProperty(key)) {
             const timeObj = times[key];
             const time = timeObj.time;
 
-            // Display the time
-            console.log("Time: " + time);
-            // You can modify the above line to display the time wherever you want
+            // Check if the time is already in the uniqueTimes Set
+            if (!uniqueTimes.has(time)) {
+              // Append the time to the time list HTML
+              timeListHTML += "<li>" + time + "</li>";
 
-            // If you want to display it in an HTML element with the id "findName"
-            // you can do the following:
-            // const findName = document.getElementById("findName");
-            // findName.innerHTML = "Time: " + time;
+              // Add the time to the uniqueTimes Set
+              uniqueTimes.add(time);
+            }
           }
         }
+
+        // Set the HTML of the 'findName' element to display the time list
+        findName.innerHTML = "<ul>" + timeListHTML + "</ul>";
       } else {
         alert("No data found");
       }
@@ -171,10 +175,6 @@ function findTime() {
       alert(error);
     });
 }
-
-
-
-
 
 
 findtimeBTN.addEventListener('click', findtime);
