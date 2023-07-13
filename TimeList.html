@@ -138,24 +138,40 @@ function addTime() {
 
 };
 
-function findtime() {
+function findTime() {
+  const dbref = ref(db);
+  const timesRef = child(dbref, "times/");
 
-    const dbref = ref(db);
+  get(timesRef)
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const times = snapshot.val();
 
-            get(child(dbref, "times/"))
-            .then((snapshot)=>{
-                if (snapshot.exists()) {
-                    findName.innerHTML = "time: " + snapshot.val().time;
-                    }
-                    else{
-                    alert("No data found");
-                    }
-            })
-            .catch((error)=>{
-                alert(error)
-            })
-    
-        };
+        // Iterate over each time object in the JSON
+        for (const key in times) {
+          if (times.hasOwnProperty(key)) {
+            const timeObj = times[key];
+            const time = timeObj.time;
+
+            // Display the time
+            console.log("Time: " + time);
+            // You can modify the above line to display the time wherever you want
+
+            // If you want to display it in an HTML element with the id "findName"
+            // you can do the following:
+            // const findName = document.getElementById("findName");
+            // findName.innerHTML = "Time: " + time;
+          }
+        }
+      } else {
+        alert("No data found");
+      }
+    })
+    .catch((error) => {
+      alert(error);
+    });
+}
+
 
 
 
