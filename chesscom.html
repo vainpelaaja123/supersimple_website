@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+   
+    <link rel="shortcut icon" href="img/nimetön1.png" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta name="viewport" content=" width=device-width, initial-scale=1">
+    <title>chess API</title>
+    <style>
+
+body, html{
+
+
+margin: 0;
+padding: 0;
+background-color:#444654;
+font-family: Helvetica, sans-serif; 
+color: white;
+}
+
+
+
+.header {
+
+padding: 15px;
+margin: 0;
+text-align: center;
+background: url("img/profpic.jpg") no-repeat,
+      linear-gradient(navy, #444654);
+color: white;
+}
+
+
+.active1{
+list-style-type: none;
+margin: 0;
+padding: 0;
+overflow: hidden;
+background-color: #333;
+}
+
+.active{
+float: left;}
+
+
+.active {
+display: block;
+color: white;
+text-align: center;
+padding: 10px 16px;
+text-decoration: none;
+border-right: 1px solid white ;
+}
+
+.active:hover {
+background-color: navy;
+
+}
+
+
+#track-list{
+    
+list-style: none;
+color: white;
+padding: 0px;
+font-size: 18px;
+
+
+}
+
+#track-list li{
+
+padding: 2px;
+}
+
+
+
+ #currentlyPlaying{
+
+            font-size: 20px;
+        
+        }
+
+    </style>
+</head>
+<body>
+    <h1></h1>
+
+
+    <div class="header">
+        <h2>Progamer_55 </h2>
+        
+
+    </div>
+
+<ul class="active1">
+    <li> <a class="active" href="/"> Home </a></li1>
+    <li> <a class="active" href="/Timelist"> Time List </a></li>
+    <li> <a class="active" href="/database"> database? </a></li>
+    <li> <a class="active" href="https://www.youtube.com/@progamer_55" target="_blank"> Youtube</a></li>
+    <li> <a class="active" href="/spotify"> Spotify?</a></li>
+    <li> <a class="active" href="/weather"> weather</a></li>
+    <li> <a class="active" href="/currentlylistening"> currently listening</a></li>
+</ul>
+
+
+    
+    
+   
+    <div id="currentlyPlaying"></div>
+    <ul id="track-list"></ul>
+
+    <script>
+        // Function to fetch and display the data
+        function fetchAndDisplayData() {
+            var url = 'https://api.chess.com/pub/player/vainpelaaja123';
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    
+                    
+                    var Avatar = data.avatar;
+                    console.log(Avatar);
+                    console.log(data.status);  
+                    }
+                )
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+                
+            }
+
+
+
+            function fetchAndDisplayData2() {
+            var url = 'https://api.chess.com/pub/player/vainpelaaja123/stats';
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    
+                   
+                    console.log(data.chess_rapid.last.rating);  
+                    }
+                )
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+                
+            }
+        // Call the function to fetch and display the data
+        fetchAndDisplayData();
+        fetchAndDisplayData2();
+
+        
+        //setInterval( fetchAndDisplayData, 20000);
+
+    </script>
+</body>
+</html>
