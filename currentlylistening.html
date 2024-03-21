@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+   
+    <link rel="shortcut icon" href="img/nimetön1.png" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta name="viewport" content=" width=device-width, initial-scale=1">
+    <title>Recent Tracks</title>
+    <style>
+
+body, html{
+
+
+margin: 0;
+padding: 0;
+background-color:#444654;
+font-family: Helvetica, sans-serif; 
+color: white;
+}
+
+
+
+.header {
+
+padding: 15px;
+margin: 0;
+text-align: center;
+background: url("img/profpic.jpg") no-repeat,
+      linear-gradient(navy, #444654);
+color: white;
+}
+
+
+.active1{
+list-style-type: none;
+margin: 0;
+padding: 0;
+overflow: hidden;
+background-color: #333;
+}
+
+.active{
+float: left;}
+
+
+.active {
+display: block;
+color: white;
+text-align: center;
+padding: 10px 16px;
+text-decoration: none;
+border-right: 1px solid white ;
+}
+
+.active:hover {
+background-color: navy;
+
+}
+
+
+#track-list{
+    
+list-style: none;
+color: white;
+padding: 0px;
+font-size: 18px;
+
+
+}
+
+#track-list li{
+
+padding: 2px;
+}
+
+
+ #myImage{
+            margin: 15px;
+            border-radius: 10px;
+            padding: 2px;
+            background-color: white;
+           
+            
+        }
+ #currentlyPlaying{
+
+            font-size: 20px;
+        
+        }
+
+    </style>
+</head>
+<body>
+    <h1></h1>
+
+
+    <div class="header">
+        <h2>Progamer_55 </h2>
+        
+
+    </div>
+
+<ul class="active1">
+    <li> <a class="active" href="/"> Home </a></li1>
+    <li> <a class="active" href="/Timelist"> Time List </a></li>
+    <li> <a class="active" href="/database"> database? </a></li>
+    <li> <a class="active" href="https://www.youtube.com/@progamer_55" target="_blank"> Youtube</a></li>
+    <li> <a class="active" href="/spotify"> Spotify?</a></li>
+    <li> <a class="active" href="/weather"> weather</a></li>
+    <li> <a class="active" href="/currentlylistening"> currently listening</a></li>
+</ul>
+
+
+    
+    
+    <img id="myImage" alt="album art">
+    <div id="currentlyPlaying"></div>
+    <ul id="track-list"></ul>
+
+    <script>
+        // Function to fetch and display the data
+        function fetchAndDisplayData() {
+            var url = 'https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=vainpelaaja123&api_key=1e7a90f18093d941dedadf8f27864bf3&format=json';
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    var recentTracks = data.recenttracks.track;
+                    var trackList = document.getElementById('track-list');
+
+                    // Check if there is a currently playing track
+                    if (recentTracks[0]['@attr'] && recentTracks[0]['@attr'].nowplaying === 'true') {
+                        var artist = recentTracks[0].artist['#text'];
+                        var trackName = recentTracks[0].name;
+                        var imageUrl = data.recenttracks.track[0].image.find(img => img.size === 'large')["#text"];
+
+                        console.log(imageUrl);
+
+                        // Set the src attribute of the image element
+                        var imageElement = document.getElementById('myImage');
+                        imageElement.src = imageUrl;                        
+
+                        
+
+                       
+
+                        var currentlyPlayingText = `I'm currently listening to:   ${trackName} by <strong>${artist}</strong>`;
+                        currentlyPlaying.innerHTML = currentlyPlayingText;
+                        
+                    } else {
+                        currentlyPlaying.innerHTML = "Looks like I'm not listening to anything. Here are the last 10 songs I listened to: ";
+                        // Display the last 10 tracks
+                        recentTracks.slice(0, 10).forEach(function(track) {
+                            var artist = track.artist['#text'] || 'Unknown Artist';
+                            var trackName = track.name || 'Unknown Track';
+                            
+                            
+
+                            var listItem = document.createElement('li');
+                            listItem.innerHTML = `${trackName} by <strong>${artist}</strong>`;
+                            trackList.appendChild(listItem);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Call the function to fetch and display the data
+        fetchAndDisplayData();
+
+        setInterval( fetchAndDisplayData, 20000);
+
+    </script>
+</body>
+</html>

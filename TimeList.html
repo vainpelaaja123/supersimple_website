@@ -6,6 +6,7 @@
 <!--	<script type= "module" src="scripts.js"></script> -->
 	<title>Time List</title>
 	<link rel="shortcut icon" href="img/nimetön1.png" type="image/x-icon">	
+    <meta name="viewport" content=" width=device-width, initial-scale=1">
 
 
 
@@ -22,8 +23,10 @@
 	<li1> <a class="active" href="/"> Home </a></li1>
     <li1> <a class="active" href="/TimeList"> Time List </a></li1>
 	<li1> <a class="active" href="/database"> database? </a></li1>
-    <li1> <a class="active" href="https://www.youtube.com/@progamer_55"> Youtube</a></li1>
+    <li1> <a class="active" href="https://www.youtube.com/@progamer_55" target="_blank"> Youtube</a></li1>
     <li1> <a class="active" href="/spotify"> Spotify?</a></li1>
+    <li1> <a class="active" href="/weather"> weather</a></li1>
+    <li1> <a class="active" href="/currentlylistening"> currently listening</a></li1>
 </ul>
 
 <br>
@@ -33,10 +36,9 @@
 
 	<button id="addtimeBTN">Add Time</button>
     <button id="findtimeBTN">find time</button>
-    <h3 id="findName" type="text"></h3>
+    <div id="findName"></div>
     
-	<ul id="timeList"><li>00.52</li><li>00.56</li><li>01.00</li><li>01.01</li><li>01.14</li><li>01.15</li><li>01.18</li><li>10.50</li><li>12.20</li><li>12.21</li><li>12.31</li><li>12.32</li><li>12.37</li><li>12.45</li><li>12.48</li><li>13.07</li><li>13.11</li><li>13.12</li><li>13.13</li><li>13.14</li><li>13.15</li><li>13.17</li><li>13.18</li><li>13.19</li><li>13.20</li><li>13.21</li><li>13.22</li><li>13.23</li><li>13.26</li><li>13.27</li><li>13.28</li><li>13.29</li><li>13.30</li><li>14.11</li><li>16.07</li><li>16.12</li><li>16.15</li><li>16.22</li><li>16.23</li><li>16.29</li><li>16.30</li><li>16.33</li><li>16.35</li><li>16.41</li><li>16.42</li><li>16.46</li><li>16.48</li><li>16.56</li><li>16.59</li><li>17.02</li><li>17.27</li><li>17.30</li><li>17.32</li><li>17.36</li><li>17.37</li><li>17.39</li><li>17.42</li><li>17.43</li><li>17.44</li><li>17.46</li><li>17.48</li><li>17.49</li><li>17.50</li><li>17.51</li><li>17.55</li><li>17.56</li><li>17.57</li><li>18.02</li><li>18.03</li><li>18.04</li><li>18.08</li><li>18.09</li><li>18.14</li><li>18.16</li><li>18.20</li><li>18.21</li><li>18.22</li><li>18.23</li><li>18.26</li><li>18.27</li><li>18.30</li><li>18.42</li><li>18.43</li><li>18.52</li><li>22.03</li><li>22.41</li><li>22.49</li><li>22.52</li><li>23.02</li>
-	</ul>
+	
 
 <script type="module">
 
@@ -137,26 +139,43 @@ function addTime() {
 };
 
 function findtime() {
+  const dbref = ref(db);
 
-    const dbref = ref(db);
+  get(child(dbref, "times/"))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const times = snapshot.val();
+        const findName = document.getElementById("findName");
+        let timeListHTML = ""; // Initialize an empty string to store the HTML for the time list
+        const uniqueTimes = new Set(); // Use a Set to keep track of unique times
 
-            get(child(dbref, "times/"))
-            .then((snapshot)=>{
-                if (snapshot.exists()) {
-                    findName.innerHTML = "time: " + snapshot.val().time;
-                    }
-                    else{
-                    alert("No data found");
-                    }
-            })
-            .catch((error)=>{
-                alert(error)
-            })
-    
-        };
+        // Iterate over each key in the 'times' object
+        for (const key in times) {
+          if (times.hasOwnProperty(key)) {
+            const timeObj = times[key];
+            const time = timeObj.time;
 
+            // Check if the time is already in the uniqueTimes Set
+            if (!uniqueTimes.has(time)) {
+              // Append the time to the time list HTML
+              timeListHTML += "<li>" + time + "</li>";
 
+              // Add the time to the uniqueTimes Set
+              uniqueTimes.add(time);
+            }
+          }
+        }
 
+        // Set the HTML of the 'findName' element to display the time list
+        findName.innerHTML = "<ul>" + timeListHTML + "</ul>";
+      } else {
+        alert("No data found");
+      }
+    })
+    .catch((error) => {
+      alert(error);
+    });
+}
 
 
 findtimeBTN.addEventListener('click', findtime);
